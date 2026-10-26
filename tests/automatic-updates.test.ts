@@ -10,7 +10,8 @@ import { createContext, runInContext } from "node:vm";
 import { describe, it } from "node:test";
 
 const mainFile = fileURLToPath(new URL("../electron/main.cjs", import.meta.url));
-const mainSource = readFileSync(mainFile, "utf8");
+// Exercise the retained upstream updater in this VM only; Slippy Lab disables it.
+const mainSource = readFileSync(mainFile, "utf8").replace("const AUTO_UPDATE_ENABLED = false;", "const AUTO_UPDATE_ENABLED = true;");
 const mainRequire = createRequire(mainFile);
 
 function fixture({ packaged = true, updaterMissing = false } = {}) {
@@ -70,7 +71,7 @@ function fixture({ packaged = true, updaterMissing = false } = {}) {
 	}
 	const app = Object.assign(new EventEmitter(), {
 		isPackaged: packaged,
-		name: "LearnHarness",
+		name: "Slippy Lab",
 		setName() {},
 		getPath: () => userData,
 		setPath: (_: string, value: string) => { userData = value; },
@@ -127,7 +128,7 @@ describe("automatic-update preference gate", () => {
 		f.run("setupAutoUpdater()");
 		await f.check();
 		assert.equal(f.updater.checks, 0);
-		assert.deepEqual(f.settingsReads, ["/fixture/custom-user-data-dev/data/settings.json"]);
+		assert.deepEqual(f.settingsReads, ["/fixture/custom-user-data/Slippy Lab-dev/data/settings.json"]);
 		await f.check(true);
 		assert.equal(f.updater.checks, 1);
 		assert.equal(f.settingsReads.length, 1);

@@ -14,8 +14,8 @@ const ui = JetBrains_Mono({ subsets: ["latin"], variable: "--font-jetbrains" });
 const prose = Source_Sans_3({ subsets: ["latin"], variable: "--font-sans3" });
 
 export const metadata: Metadata = {
-	title: "Learning Harness",
-	description: "A teacher agent with a memory — sessions, quizzes, and a knowledge graph of what you know.",
+	title: "Slippy Lab",
+	description: "A lab for Slippy's qualification workflow, based on LearnHarness.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

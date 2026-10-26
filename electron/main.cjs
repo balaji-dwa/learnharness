@@ -42,15 +42,14 @@ const path = require("node:path");
 // renderer owns the number; this is the IPC widen target).
 const SIDEBAR_AUTOCLOSE = 928;
 
-const PRODUCT_NAME = "LearnHarness";
+const PRODUCT_NAME = "Slippy Lab";
+// This fork must never download or install LearnHarness releases.
+const AUTO_UPDATE_ENABLED = false;
 
-// APP NAME → userData (owner, 2026-10-10): the Application Support dir is
-// exactly "LearnHarness" in dev AND packaged. Packaged Electron would
-// otherwise derive it from package.json "name" (now lowercase
-// "learnharness"), and productName metadata alone doesn't reach app.name.
-// Must run before the LH_DEV_URL suffix below — dev becomes
-// "LearnHarness-dev".
+// A separate profile keeps sessions, credentials, browser state, and locks
+// independent of the installed LearnHarness app. Dev adds its own suffix.
 app.setName(PRODUCT_NAME);
+app.setPath("userData", path.join(app.getPath("appData"), PRODUCT_NAME));
 const AUTH_FILE = () => path.join(app.getPath("userData"), "auth.json");
 const DATA_DIR = () => path.join(app.getPath("userData"), "data");
 
@@ -504,8 +503,8 @@ function installUpdateNow() {
 }
 
 function setupAutoUpdater() {
-	if (!app.isPackaged) {
-		log("auto-update: dev build — updater disabled");
+	if (!AUTO_UPDATE_ENABLED || !app.isPackaged) {
+		log("auto-update: disabled for Slippy Lab");
 		reportUpdateStatus("disabled");
 		return;
 	}

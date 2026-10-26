@@ -4,7 +4,7 @@
 # a fresh instance with zero keys and zero data — setup stage 1, every
 # launch. The owner's repeatable first-run BYOK test bed.
 #
-#   bash scripts/dev-fresh.sh            # http://localhost:3005
+#   bash scripts/dev-fresh.sh            # http://127.0.0.1:3018
 #   npm run dev:fresh                    # the same, via package.json
 #   scripts/dev-fresh.sh --port 3006    # any port OUTSIDE 3000-3004
 #   scripts/dev-fresh.sh --keep         # don't wipe between runs
@@ -28,7 +28,7 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-PORT="3005"
+PORT="3018"
 DATA_DIR="$ROOT/.fresh-data"
 KEEP=false
 
@@ -70,7 +70,7 @@ fi
 case "$PORT" in
 3000 | 3001 | 3002 | 3003 | 3004)
 	echo "error: port $PORT is a standing assignment (3000 master, 3001 UI, 3002 graph, 3003 teacher, 3004 platform)" >&2
-	echo "       — the fresh instance runs on a dedicated port (default 3005)" >&2
+	echo "       — the fresh instance runs on a dedicated port (default 3018)" >&2
 	exit 1
 	;;
 esac
@@ -96,4 +96,4 @@ echo "  keys     : env keys hidden (LH_IGNORE_ENV_KEYS=1), auth.json empty"
 echo "─────────────────────────────────────────────────────────"
 
 cd "$ROOT"
-exec npm run dev
+exec npx next dev --hostname 127.0.0.1 --port "$PORT"

@@ -1,3 +1,11 @@
+# Slippy Lab
+
+A qualification-workflow lab forked from [LearnHarness](https://github.com/amosblomqvist/learnharness), based on upstream 0.3.8 (`3dc88472eea41eed0d5e5f29c2f16f8d063c415b`). The application identity and local profile are separate from LearnHarness. Learning features and prompts are unchanged pending approval of the [adaptation plan](docs/slippy-lab-plan.md).
+
+Local development: `npm ci`, then `npm run dev` at `http://127.0.0.1:3017`, or `npm run desktop:dev`. Packaged app profile: `~/Library/Application Support/Slippy Lab`; desktop development profile: `Slippy Lab-dev`. Web development uses this checkout's `data/` and `auth.json`. Updates are disabled. No LearnHarness sessions, keys, or settings are copied. The upstream license and attribution are retained.
+
+The original LearnHarness documentation below is retained for reference until the adaptation plan is approved.
+
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="docs/assets/lh_banner_dark.png">
